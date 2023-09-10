@@ -7,6 +7,7 @@ import { Image, View, StyleSheet } from 'react-native'
 import ImageViewer from '../../components/ImageViewer';
 
 const PlaceholderImage = require('../../assets/images/background-image.png');
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function TabOneScreen() {
   const [selectedImage, setSelectedImage] = useState('');
@@ -41,13 +42,17 @@ export default function TabOneScreen() {
             isDisabled={false}
             isFocusVisible={false}
           >
-            <ButtonText>Carregar Imagem</ButtonText>
-
+            <MaterialIcons name="cloud-upload" size={38} color="white" />
+            <ButtonText>
+            
+              Carregar Imagem
+              </ButtonText>
           </Button>
         </View>
         
      
           <Fab size="lg" bgColor='$green400' placement="bottom center" isHovered={true} isDisabled={false} isPressed={false} >
+          <MaterialIcons name="edit" size={38} color="white" />
            <ButtonText>Usar essa imagem</ButtonText>
           </Fab>
    
