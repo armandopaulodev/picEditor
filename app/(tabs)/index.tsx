@@ -20,29 +20,35 @@ export default function TabOneScreen() {
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
     } else {
-      alert("You did not select any image.");
+      alert("Opha cancelado");
     }
   };
 
   return (
     <GluestackUIProvider config={config.theme}>
-      <Box width="100%" justifyContent="center" alignItems="center" top={100} >
+      <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} />
+      </View>
+      <View style={styles.footerContainer}>
       <Button
+      marginBottom={60}
           onPress={pickImageAsync}
-          size="md"
+          size="lg"
           variant="solid"
-          action="primary"
+          action="secondary"
+          bgColor='$rose500'
           isDisabled={false}
           isFocusVisible={false}
         >
-          <ButtonText>Picker IMage</ButtonText>
+          <ButtonText>Carregar Imagem</ButtonText>
 
         </Button>
-        <View style={styles.imageContainer}>
-          <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} />
-        </View>
-        
-      </Box>
+        <ButtonText onPress={()=>console.log('usar essa imagem')}>Usar Essa imagem</ButtonText>
+      </View>
+     
+    </View>
+
     </GluestackUIProvider>
   );
 }
