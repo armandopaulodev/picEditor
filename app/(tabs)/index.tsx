@@ -118,7 +118,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#f1f5f9',
     alignItems: 'center',
   },
   imageContainer: {

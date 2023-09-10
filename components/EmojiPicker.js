@@ -6,7 +6,7 @@ export default function EmojiPicker({ isVisible, children, onClose }) {
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Choose a sticker</Text>
+          <Text style={styles.title}>Emojis disponiveis</Text>
           <Pressable onPress={onClose}>
             <MaterialIcons name="close" color="#fff" size={22} />
           </Pressable>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   titleContainer: {
-    height: '16%',
+    height: '24%',
     backgroundColor: '#464C55',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 19,
   },
 });
