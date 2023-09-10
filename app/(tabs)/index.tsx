@@ -1,27 +1,15 @@
-import { StyleSheet, View, Text } from 'react-native';
+
 import React from 'react';
+import { GluestackUIProvider, Text, Box, config } from "@gluestack-ui/themed";
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-          <Text style={styles.title}>PickEditor</Text>
-    </View>
+    <GluestackUIProvider config={config.theme}>
+    <Box width="100%" justifyContent="center" alignItems="center">
+      <Text>Open up App.js to start working on your app!</Text>
+    </Box>
+  </GluestackUIProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+
