@@ -2,6 +2,7 @@
 import React from 'react';
 import { GluestackUIProvider, Text, Box, config } from "@gluestack-ui/themed";
 
+
 export default function TabOneScreen() {
   return (
     <GluestackUIProvider config={config.theme}>
