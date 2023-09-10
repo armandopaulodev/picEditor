@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { GluestackUIProvider, Text, Box, config, Button, ButtonText, ButtonIcon } from "@gluestack-ui/themed";
+import { GluestackUIProvider, Text, Box, config, Button, ButtonText, ButtonIcon, Fab, AddIcon, FabIcon, FabLabel, Icon } from "@gluestack-ui/themed";
 import * as ImagePicker from 'expo-image-picker';
 import { Image, View, StyleSheet } from 'react-native'
 
@@ -27,27 +27,32 @@ export default function TabOneScreen() {
   return (
     <GluestackUIProvider config={config.theme}>
       <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} />
-      </View>
-      <View style={styles.footerContainer}>
-      <Button
-      marginBottom={60}
-          onPress={pickImageAsync}
-          size="lg"
-          variant="solid"
-          action="secondary"
-          bgColor='$rose500'
-          isDisabled={false}
-          isFocusVisible={false}
-        >
-          <ButtonText>Carregar Imagem</ButtonText>
+        <View style={styles.imageContainer}>
+          <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} />
+        </View>
+        <View style={styles.footerContainer}>
+          <Button
+            marginBottom={60}
+            onPress={pickImageAsync}
+            size="lg"
+            variant="solid"
+            action="secondary"
+            bgColor='$rose500'
+            isDisabled={false}
+            isFocusVisible={false}
+          >
+            <ButtonText>Carregar Imagem</ButtonText>
 
-        </Button>
-        <ButtonText onPress={()=>console.log('usar essa imagem')}>Usar Essa imagem</ButtonText>
-      </View>
+          </Button>
+        </View>
+        
      
-    </View>
+          <Fab size="lg" bgColor='$green400' placement="bottom center" isHovered={true} isDisabled={false} isPressed={false} >
+           <ButtonText>Usar essa imagem</ButtonText>
+          </Fab>
+   
+      
+      </View>
 
     </GluestackUIProvider>
   );
