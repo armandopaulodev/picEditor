@@ -14,6 +14,7 @@ import EmojiPicker from '../../components/EmojiPicker';
 import EmojiList from '../../components/EmojiList';
 import EmojiSticker from '../../components/EmojiSticker';
 import React from 'react';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
 
 const PlaceholderImage = require('../../assets/images/background-image.png');
 
@@ -32,7 +33,7 @@ export default function TabOneScreen() {
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,      
+      allowsEditing: true,
       quality: 1,
     });
 
@@ -74,7 +75,8 @@ export default function TabOneScreen() {
   };
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <GluestackUIProvider>
+       <GestureHandlerRootView style={styles.container}>
       <View style={styles.imageContainer}>
         <View ref={imageRef} collapsable={false}>
           <ImageViewer
@@ -90,9 +92,9 @@ export default function TabOneScreen() {
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
           <View style={styles.optionsRow}>
-            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <IconButton icon="refresh" label="Limpar" onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
-            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+            <IconButton icon="save-alt" label="Salvar" onPress={onSaveImageAsync} />
           </View>
         </View>
       ) : (
@@ -108,6 +110,7 @@ export default function TabOneScreen() {
       </EmojiPicker>
       <StatusBar style="auto" />
     </GestureHandlerRootView>
+    </GluestackUIProvider>
   );
 }
 
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    flex:1, 
+    flex: 1,
     paddingTop: 58
   },
   footerContainer: {
@@ -134,5 +137,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-  },  
+  },
 });
