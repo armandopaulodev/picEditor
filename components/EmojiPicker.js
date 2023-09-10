@@ -1,19 +1,28 @@
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-
+import { GluestackUIProvider, Actionsheet,ActionsheetBackdrop,ActionsheetDragIndicator,ActionsheetContent,ActionsheetDragIndicatorWrapper } from '@gluestack-ui/themed';
 export default function EmojiPicker({ isVisible, children, onClose }) {
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
-      <View style={styles.modalContent}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Emojis disponiveis</Text>
-          <Pressable onPress={onClose}>
-            <MaterialIcons name="close" color="#fff" size={22} />
-          </Pressable>
-        </View>
-        {children}
-      </View>
-    </Modal>
+    <Actionsheet isOpen={isVisible} onClose={onClose}>
+        <ActionsheetBackdrop />
+        <ActionsheetContent maxHeight="75%">
+          <ActionsheetDragIndicatorWrapper>
+            <ActionsheetDragIndicator />
+          </ActionsheetDragIndicatorWrapper>
+     
+        </ActionsheetContent>
+      </Actionsheet>
+    // <Modal animationType="slide" transparent={true} visible={isVisible}>
+    //   <View style={styles.modalContent}>
+    //     <View style={styles.titleContainer}>
+    //       <Text style={styles.title}>Emojis disponiveis</Text>
+    //       <Pressable onPress={onClose}>
+    //         <MaterialIcons name="close" color="#fff" size={22} />
+    //       </Pressable>
+    //     </View>
+    //     {children}
+    //   </View>
+    // </Modal>
   );
 }
 
