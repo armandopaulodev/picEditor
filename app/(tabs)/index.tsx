@@ -16,7 +16,7 @@ import EmojiSticker from '../../components/EmojiSticker';
 import React from 'react';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 
-const PlaceholderImage = require('../../assets/images/background-image.png');
+const PlaceholderImage = require('../../assets/images/uz.jpg');
 
 export default function TabOneScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -99,12 +99,12 @@ export default function TabOneScreen() {
         </View>
       ) : (
         <View style={styles.footerContainer}>
-          <Button theme="primary" label="Carregar IMagem" onPress={pickImageAsync} />
-          <Button label="Usar essa imagem" onPress={() => setShowAppOptions(true)}
+          <Button bg={'$rose500'} icon={'cloud-upload'} theme="primary" label="Carregar IMagem" onPress={pickImageAsync} />
+          <Button bg={'$green500'} icon={'edit'} theme="primary" label="Usar essa imagem" onPress={() => setShowAppOptions(true)}
           />
         </View>
       )}
-      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose} image={selectedImage}>
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
       <StatusBar style="auto" />
