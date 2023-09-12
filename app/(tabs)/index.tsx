@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
@@ -15,17 +15,28 @@ import EmojiList from '../../components/EmojiList';
 import EmojiSticker from '../../components/EmojiSticker';
 import React from 'react';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
-
-const PlaceholderImage = require('../../assets/images/uz.jpg');
+import { Asset } from 'expo-asset';
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
+import * as FileSystem from 'expo-file-system';
+const localImage= require('../../assets/images/uz.jpg');
 
 export default function TabOneScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showAppOptions, setShowAppOptions] = useState(false);
   const [pickedEmoji, setPickedEmoji] = useState(null);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [PlaceholderImage, setPlaceholderImage] = useState<Asset>();
 
   const [status, requestPermission] = MediaLibrary.usePermissions();
   const imageRef = useRef();
+  
+  useEffect(() => {
+    (async () => {
+      const image = Asset.fromModule(localImage);
+      await image.downloadAsync();
+      setPlaceholderImage(image);
+    })();
+  }, []);
 
   if (status === null) {
     requestPermission();
@@ -67,11 +78,21 @@ export default function TabOneScreen() {
 
       await MediaLibrary.saveToLibraryAsync(localUri);
       if (localUri) {
-        alert("Saved!");
+        alert("Salvo com sucesso");
       }
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const _rotate90andFlip = async () => {
+
+    const manipResult = await manipulateAsync(
+      PlaceholderImage.localUri || PlaceholderImage.uri,
+      [{ rotate: 180 }, { flip: FlipType.Horizontal }],
+      { compress: 1, format: SaveFormat.PNG }
+    );
+    setPlaceholderImage(manipResult);
   };
 
   return (
@@ -95,6 +116,9 @@ export default function TabOneScreen() {
             <IconButton icon="refresh" label="Limpar" onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
             <IconButton icon="save-alt" label="Salvar" onPress={onSaveImageAsync} />
+          </View>
+          <View style={styles.optionsRow2}>
+            <IconButton icon="rotate-90-degrees-ccw" label="Rotacao" onPress={_rotate90andFlip} />
           </View>
         </View>
       ) : (
@@ -136,5 +160,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  optionsRow2: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop:20
   },
 });
