@@ -88,11 +88,13 @@ export default function TabOneScreen() {
   const _rotate90andFlip = async () => {
 
     const manipResult = await manipulateAsync(
-      PlaceholderImage.localUri || PlaceholderImage.uri,
+      selectedImage? selectedImage : PlaceholderImage?.localUri||PlaceholderImage?.uri,
       [{ rotate: 180 }, { flip: FlipType.Horizontal }],
       { compress: 1, format: SaveFormat.PNG }
     );
-    setPlaceholderImage(manipResult);
+  
+    setSelectedImage(manipResult.uri);
+    console.log('result: '+JSON.stringify(manipResult))
   };
 
   return (
