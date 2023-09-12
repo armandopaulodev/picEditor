@@ -92,9 +92,8 @@ export default function TabOneScreen() {
       [{ rotate: 180 }, { flip: FlipType.Horizontal }],
       { compress: 1, format: SaveFormat.PNG }
     );
-  
     setSelectedImage(manipResult.uri);
-    console.log('result: '+JSON.stringify(manipResult))
+
   };
 
   return (
