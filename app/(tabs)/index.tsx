@@ -14,11 +14,13 @@ import EmojiPicker from '../../components/EmojiPicker';
 import EmojiList from '../../components/EmojiList';
 import EmojiSticker from '../../components/EmojiSticker';
 import React from 'react';
-import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { Box, GluestackUIProvider, Text } from '@gluestack-ui/themed';
 import { Asset } from 'expo-asset';
 import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
-const localImage= require('../../assets/images/uz.jpg');
+const localImage = require('../../assets/images/uz.jpg');
+import * as Sharing from 'expo-sharing';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function TabOneScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,7 +31,7 @@ export default function TabOneScreen() {
 
   const [status, requestPermission] = MediaLibrary.usePermissions();
   const imageRef = useRef();
-  
+
   useEffect(() => {
     (async () => {
       const image = Asset.fromModule(localImage);
@@ -86,54 +88,63 @@ export default function TabOneScreen() {
   };
 
   const _rotate90andFlip = async () => {
-
     const manipResult = await manipulateAsync(
-      selectedImage? selectedImage : PlaceholderImage?.localUri||PlaceholderImage?.uri,
+      selectedImage ? selectedImage : PlaceholderImage?.localUri || PlaceholderImage?.uri,
       [{ rotate: 180 }, { flip: FlipType.Horizontal }],
       { compress: 1, format: SaveFormat.PNG }
     );
     setSelectedImage(manipResult.uri);
+  }; 
 
-  };
-
+  const _sharePhoto = async () =>{
+    Sharing.shareAsync(selectedImage ? selectedImage : PlaceholderImage?.localUri || PlaceholderImage?.uri);
+  }
+  
   return (
     <GluestackUIProvider>
-       <GestureHandlerRootView style={styles.container}>
-      <View style={styles.imageContainer}>
-        <View ref={imageRef} collapsable={false}>
-          <ImageViewer
-            ref={imageRef}
-            placeholderImageSource={PlaceholderImage}
-            selectedImage={selectedImage}
-          />
-          {pickedEmoji !== null ? (
-            <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
-          ) : null}
-        </View>
-      </View>
-      {showAppOptions ? (
-        <View style={styles.optionsContainer}>
-          <View style={styles.optionsRow}>
-            <IconButton icon="refresh" label="Limpar" onPress={onReset} />
-            <CircleButton onPress={onAddSticker} />
-            <IconButton icon="save-alt" label="Salvar" onPress={onSaveImageAsync} />
-          </View>
-          <View style={styles.optionsRow2}>
-            <IconButton icon="rotate-90-degrees-ccw" label="Rotacao" onPress={_rotate90andFlip} />
-          </View>
-        </View>
-      ) : (
-        <View style={styles.footerContainer}>
-          <Button bg={'$rose500'} icon={'cloud-upload'} theme="primary" label="Carregar IMagem" onPress={pickImageAsync} />
-          <Button bg={'$green500'} icon={'edit'} theme="primary" label="Usar essa imagem" onPress={() => setShowAppOptions(true)}
-          />
-        </View>
-      )}
-      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose} image={selectedImage}>
-        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
-      </EmojiPicker>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'#f8fafc', padding:20 }}>
       <StatusBar style="auto" />
-    </GestureHandlerRootView>
+        <Text style={{ fontWeight:'bold', fontSize:20 }}>PickEditor</Text>
+        <MaterialIcons name="share" size={25} color="#25292e" onPress={_sharePhoto}/>
+      </View>
+      <GestureHandlerRootView style={styles.container}>
+
+        <View style={styles.imageContainer}>
+          <View ref={imageRef} collapsable={false}>
+            <ImageViewer
+              ref={imageRef}
+              placeholderImageSource={PlaceholderImage}
+              selectedImage={selectedImage}
+            />
+            {pickedEmoji !== null ? (
+              <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
+            ) : null}
+          </View>
+        </View>
+        {showAppOptions ? (
+          <View style={styles.optionsContainer}>
+            <View style={styles.optionsRow}>
+              <IconButton icon="refresh" label="Limpar" onPress={onReset} />
+              <CircleButton onPress={onAddSticker} />
+              <IconButton icon="save-alt" label="Salvar" onPress={onSaveImageAsync} />
+            </View>
+            <View style={styles.optionsRow2}>
+              <IconButton icon="rotate-90-degrees-ccw" label="Rotacao" onPress={_rotate90andFlip} />
+            </View>
+          </View>
+        ) : (
+          <View style={styles.footerContainer}>
+            <Button bg={'$rose500'} icon={'cloud-upload'} theme="primary" label="Carregar IMagem" onPress={pickImageAsync} />
+            <Button bg={'$green500'} icon={'edit'} theme="primary" label="Usar essa imagem" onPress={() => setShowAppOptions(true)}
+            />
+          </View>
+        )}
+        <EmojiPicker isVisible={isModalVisible} onClose={onModalClose} image={selectedImage}>
+          <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+        </EmojiPicker>
+       
+      </GestureHandlerRootView>
     </GluestackUIProvider>
   );
 }
@@ -166,6 +177,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop:20
+    marginTop: 20
   },
 });
